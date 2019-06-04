@@ -19,4 +19,14 @@
 	    args="-z 1.0 -unpause -sdf -model ziko -file $(find ziko)/model/model.sdf  " respawn="false" output="screen" />
 
 
+  <node 
+    pkg="robot_localization" 
+    type="ekf_localization_node" 
+    name="ekf" 
+    clear_params="true">
+    <rosparam command="load" file="$(find ziko)/param/ekf_params.yaml"/>
+
+<param name="gps_used" value="true"/>
+</node>
+
 </launch>
