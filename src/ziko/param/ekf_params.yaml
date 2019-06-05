@@ -3,7 +3,7 @@
 # General Settings
 frequency: 50                            # Rate to produce state estimates
 sensor_timeout: 0.1                      # Time beyond which predictions are made without correction
-two_d_mode: true                         # Fuse zero values for 3D variables
+two_d_mode: false                        # Fuse zero values for 3D variables
 dynamic_process_noise_covariance: true   # Scale the process noise with velocity
 use_control: false                       # Use control during prediction phase
 publish_acceleration: false              # Publish linear acceleration data
@@ -17,31 +17,46 @@ world_frame: odom
 
 # Diagnostics and debugging
 print_diagnostics: true
-debug: true
+debug: false
 debug_out_file: ~/debug.log
 
 ##### Odometry Configuration #####
 odom0: odometry
-odom0_config: [false, false, false,
-               false, false, false,
+odom0_config: [true, true, false,
+               true, true, true,
                true,  true,  false,
-               false, false, true,
-               false, false, false]
+               true, true, true,
+               true, true, false]
 
 odom0_queue_size: 2
 odom0_nodelay: true
 odom0_differential: false
-odom0_relative: false
+odom0_relative: true
+odom1: odometry/gps
+odom1_config: [true, true, false,
+               false, false,false,
+               false,  false,false,
+               false, false, false,
+               false, false, false]
+
+odom1_queue_size: 2
+odom1_nodelay: true
+odom1_differential: false
+odom1_relative: true
+
 #odom0_pose_rejection_threshold: 5
 #odom0_twist_rejection_threshold: 1
 
+control_config: [true, true, false, false, false, true]
+
 ##### IMU Configuration #####
 imu0: imu/data
-imu0_config: [false, false, false,
-              false, false, false,
-              false, false, false,
-              false, false, true,
-              true,  true, false]
+imu0_config: [true, true, false,
+              true, true, true,
+              true,  true,  false,
+              true, true, true,
+              true, true, false]
+
 
 imu0_queue_size: 5
 imu0_nodelay: false

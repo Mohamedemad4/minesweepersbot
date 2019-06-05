@@ -6,6 +6,8 @@
   <arg name="z_pos" default="5.0"/>
   <arg name="verbose" default="true"/>
 
+  <remap from="/gps/fix" to="/fix"/>
+  
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
 	  <arg name="world_name" value="$(find ziko)/worlds/empty.world"/>
     <arg name="paused" value="false"/>
@@ -15,9 +17,8 @@
     <arg name="debug" value="false"/>
   </include>
 
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
 	    args="-z 1.0 -unpause -sdf -model ziko -file $(find ziko)/model/model.sdf  " respawn="false" output="screen" />
-
 
   <node 
     pkg="robot_localization" 
@@ -25,8 +26,14 @@
     name="ekf" 
     clear_params="true">
     <rosparam command="load" file="$(find ziko)/param/ekf_params.yaml"/>
+   </node>
 
-<param name="gps_used" value="true"/>
-</node>
+
+   <node
+     pkg="robot_localization" 
+     type="navsat_transform_node" 
+     name="navsat_transform" >
+    <rosparam command="load" file="$(find ziko)/param/navsat_trans.yaml"/>
+   </node>
 
 </launch>
