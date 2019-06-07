@@ -13,13 +13,13 @@
   <commandTopic>cmd_vel</commandTopic>
    <odometryTopic>odometry</odometryTopic>
    <odometryFrame>odometry</odometryFrame>
-  <robotBaseFrame>chassis</robotBaseFrame>
+  <robotBaseFrame>base_link</robotBaseFrame>
   </plugin>
   <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so"></plugin>
   <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so"></plugin>
         <static>false</static>
 
-        <link name='chassis'>
+        <link name='base_link'>
           <pose>0 0 .1 0 0 0</pose>
           <collision name='collision'>
             <geometry>
@@ -121,7 +121,7 @@
       <joint type="revolute" name="left_wheel_hinge">
         <pose>0 0 -0.03 0 0 0</pose>
         <child>left_wheel</child>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <axis>
           <xyz>0 1 0</xyz>
         </axis>
@@ -130,7 +130,7 @@
       <joint type="revolute" name="left_wheel_front_hinge">
         <pose>0 0 -0.03 0 0 0</pose>
         <child>left_wheel_front</child>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <axis>
           <xyz>0 1 0</xyz>
         </axis>
@@ -139,7 +139,7 @@
       <joint type="revolute" name="right_wheel_hinge">
         <pose>0 0 0.03 0 0 0</pose>
         <child>right_wheel</child>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <axis>
           <xyz>0 1 0</xyz>
         </axis>
@@ -148,7 +148,7 @@
       <joint type="revolute" name="right_wheel_front_hinge">
         <pose>0 0 0.03 0 0 0</pose>
         <child>right_wheel_front</child>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <axis>
           <xyz>0 1 0</xyz>
         </axis>
@@ -159,9 +159,9 @@
     </include>
     <joint name="hokuyo_joint" type="fixed">
       <child>hokuyo::link</child>
-      <parent>chassis</parent>
+      <parent>base_link</parent>
     </joint-->
-    <sonar><parent>chassis</parent> </sonar>
+    <sonar><parent>base_link</parent> </sonar>
       </model>
     </sdf>
 

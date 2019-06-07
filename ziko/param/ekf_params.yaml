@@ -10,9 +10,9 @@ publish_acceleration: false              # Publish linear acceleration data
 
 # Published TF Settings
 publish_tf: true                   # Publish TF from world_frame to base_link_frame
-transform_time_offset: 0.0         # Value to future date transforms
+transform_time_offset: 0.1         # Value to future date transforms
 odom_frame: odom
-base_link_frame: chassis
+base_link_frame: base_link
 world_frame: odom
 
 # Diagnostics and debugging
@@ -32,17 +32,20 @@ odom0_queue_size: 2
 odom0_nodelay: true
 odom0_differential: false
 odom0_relative: true
-odom1: odometry/gps
-odom1_config: [true, true, false,
-               false, false,false,
-               false,  false,false,
-               false, false, false,
-               false, false, false]
 
-odom1_queue_size: 2
-odom1_nodelay: true
-odom1_differential: false
-odom1_relative: true
+#odom1: odometry/gps
+#odom1_config: [true, true, false,
+#false, false,false,
+#                false,  false,false,
+#                              false, false, false,
+#                              false, false, false]
+               
+                              #odom1_queue_size: 2
+#odom1_nodelay: true
+#odom1_differential: false
+#odom1_relative: true
+
+
 
 #odom0_pose_rejection_threshold: 5
 #odom0_twist_rejection_threshold: 1
