@@ -10,7 +10,8 @@ publish_acceleration: false              # Publish linear acceleration data
 
 # Published TF Settings
 publish_tf: true                   # Publish TF from world_frame to base_link_frame
-transform_time_offset: 0.1         # Value to future date transforms
+transform_time_offset: 0.5 # Value to future date transforms
+transform_timeout: 0.0
 odom_frame: odom
 base_link_frame: base_link
 world_frame: odom
