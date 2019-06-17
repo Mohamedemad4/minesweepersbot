@@ -1,10 +1,7 @@
 unsigned long previousMillis1 = 0; 
-unsigned long previousMillis2 = 0;        // will store last time LED was updated
-//int rightSpeed;
-//int leftSpeed;
-//long rencoder=0;
-//long lencoder=0;
+unsigned long previousMillis2 = 0;
 
+#define stepsPerRev 200
 void runSteppers(){
       unsigned long currentMillis1 = millis();
       unsigned long currentMillis2 = millis();
@@ -21,70 +18,101 @@ void runSteppers(){
 }
 
 void oneStepRight(){
-    if (rightSpeed==0){
+  if (rightSpeed==0){
         return;
-    }
+  }
   switch (rencoder % 4)
   {
   case 0:
-      digitalWrite(motorPin1, HIGH);
-      digitalWrite(motorPin2, LOW);
-      digitalWrite(motorPin3, HIGH);
-      digitalWrite(motorPin4, LOW);
+      digitalWrite(motorPin1R, HIGH);
+      digitalWrite(motorPin2R, LOW);
+      digitalWrite(motorPin3R, HIGH);
+      digitalWrite(motorPin4R, LOW);
       break;
   case 1:
-    digitalWrite(motorPin1, LOW);
-    digitalWrite(motorPin2, HIGH);
-    digitalWrite(motorPin3, HIGH);
-    digitalWrite(motorPin4, LOW);
+    digitalWrite(motorPin1R, LOW);
+    digitalWrite(motorPin2R, HIGH);
+    digitalWrite(motorPin3R, HIGH);
+    digitalWrite(motorPin4R, LOW);
     break;
   case 2:
-    digitalWrite(motorPin1, LOW);
-    digitalWrite(motorPin2, HIGH);
-    digitalWrite(motorPin3, LOW);
-    digitalWrite(motorPin4, HIGH);
+    digitalWrite(motorPin1R, LOW);
+    digitalWrite(motorPin2R, HIGH);
+    digitalWrite(motorPin3R, LOW);
+    digitalWrite(motorPin4R, HIGH);
     break;
    case 3:
-    digitalWrite(motorPin1, HIGH);
-    digitalWrite(motorPin2, LOW);
-    digitalWrite(motorPin3, LOW);
-    digitalWrite(motorPin4, HIGH);
+    digitalWrite(motorPin1R, HIGH);
+    digitalWrite(motorPin2R, LOW);
+    digitalWrite(motorPin3R, LOW);
+    digitalWrite(motorPin4R, HIGH);
    break;
   default:
       break;
   }  
 }
+
 void oneStepLeft(){
-    
+  if (leftSpeed==0){
+        return;
+  }
+  switch (lencoder % 4)
+  {
+  case 0:
+      digitalWrite(motorPin1L, HIGH);
+      digitalWrite(motorPin2L, LOW);
+      digitalWrite(motorPin3L, HIGH);
+      digitalWrite(motorPin4L, LOW);
+      break;
+  case 1:
+    digitalWrite(motorPin1L, LOW);
+    digitalWrite(motorPin2L, HIGH);
+    digitalWrite(motorPin3L, HIGH);
+    digitalWrite(motorPin4L, LOW);
+    break;
+  case 2:
+    digitalWrite(motorPin1L, LOW);
+    digitalWrite(motorPin2L, HIGH);
+    digitalWrite(motorPin3L, LOW);
+    digitalWrite(motorPin4L, HIGH);
+    break;
+   case 3:
+    digitalWrite(motorPin1L, HIGH);
+    digitalWrite(motorPin2L, LOW);
+    digitalWrite(motorPin3L, LOW);
+    digitalWrite(motorPin4L, HIGH);
+   break;
+  default:
+      break;
+  }  
 }
 int speed2delay(int spd){
     if (spd==0){
         return 0;
     }
-//    Serial.println(spd);
-    return map(spd, 0, 255, 21, 8); //positive vel
+    return map(abs(spd), 0, 255, 21, 8); //positive vel
 }
 
 void encoderpp(int i,int spd){
     if (i==LEFT){
-        if (lencoder<200 && spd>0){
+        if (lencoder<stepsPerRev && spd>0){
              lencoder++;
         }
-        if (lencoder<200 && spd<0){
+        if (lencoder<stepsPerRev && spd<0){
              lencoder--;
         }
-        if (lencoder>=200){
+        if (lencoder>=stepsPerRev){
             lencoder=0;
         }
     }
     if (i==RIGHT){
-        if (rencoder<200 && spd>0){
+        if (rencoder<stepsPerRev && spd>0){
              rencoder++;
         }
-        if (rencoder<200 && spd<0){
+        if (rencoder<stepsPerRev && spd<0){
              rencoder--;
         }
-        if (rencoder>=200){
+        if (rencoder>=stepsPerRev){
             rencoder=0;
         }
     }

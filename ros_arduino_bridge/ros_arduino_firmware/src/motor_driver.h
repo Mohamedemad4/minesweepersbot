@@ -23,6 +23,18 @@ void setMotorSpeeds(int leftSpeed, int rightSpeed);
 
 #endif
 
+#ifdef L298Steppers
+ #define motorPin1L 2  
+ #define motorPin2L 3
+ #define motorPin3L 4
+ #define motorPin4L 5
+ 
+ #define motorPin1R 6
+ #define motorPin2R 7
+ #define motorPin3R 8
+ #define motorPin4R 9
+ 
+#endif
 #ifdef ADAFRUIT_MOTOR_SHIELD_V2
 
   #define LEFT_MOTOR_HEADER   1

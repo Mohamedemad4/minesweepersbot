@@ -45,10 +45,6 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-int motorPin1 = 2;
-int motorPin2 = 3;
-int motorPin3 = 4;
-int motorPin4 = 5;
 
 
 #define USE_BASE      // Enable/disable the base controller code
@@ -352,10 +348,7 @@ int runCommand() {
 /* Setup function--runs once at startup. */
 void setup() {
   Serial.begin(BAUDRATE);
-  pinMode(motorPin1, OUTPUT);
-  pinMode(motorPin2, OUTPUT);
-  pinMode(motorPin3, OUTPUT);
-  pinMode(motorPin4, OUTPUT);
+
   // Initialize the motor controller if used */
   #ifdef USE_BASE
     /* Initialize the encoder interface */

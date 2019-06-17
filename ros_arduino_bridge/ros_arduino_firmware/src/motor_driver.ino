@@ -11,7 +11,15 @@
 
 #ifdef L298Steppers
    void initMotorController(){
-     
+       pinMode(motorPin1L, OUTPUT);
+       pinMode(motorPin2L, OUTPUT);
+       pinMode(motorPin3L, OUTPUT);
+       pinMode(motorPin4L, OUTPUT);
+
+       pinMode(motorPin1R, OUTPUT);
+       pinMode(motorPin2R, OUTPUT);
+       pinMode(motorPin3R, OUTPUT);
+       pinMode(motorPin4R, OUTPUT);
    }
    void setMotorSpeed(int i, int spd){
       if (i==LEFT) leftSpeed=spd;
