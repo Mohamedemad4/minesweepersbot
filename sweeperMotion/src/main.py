@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 
-import roslib; #roslib.load_manifest('rbx1_nav')
+import roslib
 import rospy
 import actionlib
+from waypoint_gen import genrateWayPoints
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, Point, Quaternion, Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -13,13 +14,15 @@ from math import radians, pi
 
 class MoveBaseSquare():
     def __init__(self):
-        rospy.init_node('nav_test', anonymous=False)
+        rospy.init_node('Nav_Sweeper', anonymous=False)
         
         rospy.on_shutdown(self.shutdown)
         
         # How big is the square we want the robot to navigate?
-        square_size = rospy.get_param("~square_size",5.0) # meters
-        detector_width = rospy.get_param("~detector_width",0.5) 
+        arena_length = rospy.get_param("~arena_length",5.0) # meters
+        detector_width = rospy.get_param("~detector_width",-0.4) 
+        self.frame_id_goal = rospy.get_param("~frame_id_goal","odom")
+        self.action_allow_time = rospy.get_param("~allowed_timeForgoal",60)
         # Create a list to hold the target quaternions (orientations)
         quaternions = list()
         
@@ -27,59 +30,15 @@ class MoveBaseSquare():
         euler_angles = (pi/2, pi, 3*pi/2, 0)# 90 counterclock wise,180 counterclockwise ,+90 clockwise,180 clockwise
         
         # Then convert the angles to quaternions
+        ##remember quaternions are obselete [Citation Needed]
         for angle in range(0,len(euler_angles)):
             q_angle = quaternion_from_euler(0, 0, euler_angles[angle], axes='sxyz')
             q = Quaternion(*q_angle)
             quaternions.append(q)
         
         # Create a list to hold the waypoint poses
-        waypoints = list()
-        
-        
-        
-        """waypoints.append(Pose(Point(5.0, 0.0, 0.0), quaternions[3]))
-        waypoints.append(Pose(Point(5.0, 0.0, 0.0), quaternions[2]))
-        waypoints.append(Pose(Point(5.0, -0.40, 0.0), quaternions[1]))
-        waypoints.append(Pose(Point(0.0, -0.40, 0.0), quaternions[1]))
-        
-        waypoints.append(Pose(Point(0.0, -0.40, 0.0), quaternions[2]))
-        waypoints.append(Pose(Point(0.0, -0.80, 0.0), quaternions[2])) 
-        waypoints.append(Pose(Point(0.0, -0.80, 0.0), quaternions[3]))
-        waypoints.append(Pose(Point(5.0, -0.80, 0.0), quaternions[3]))
-      
-      
-        waypoints.append(Pose(Point(5.0, -0.80, 0.0), quaternions[2]))
-        waypoints.append(Pose(Point(5.0, -1.2, 0.0), quaternions[2]))
-        waypoints.append(Pose(Point(5.0, -1.2, 0.0), quaternions[1]))
-        #waypoints.append(Pose(Point(5.0, 0.80, 0.0), quaternions[3]))
-      
-      
-      """
-    
-        waypoints=[
-                Pose(Point(5.0, 0.0, 0.0), quaternions[3]),
-                
-                Pose(Point(5.0, 0.0, 0.0), quaternions[2]),
-                
-                Pose(Point(5.0, -0.40, 0.0), quaternions[2]),
+        waypoints = genrateWayPoints(detector_width,arena_length,quaternions)
 
-                Pose(Point(5.0, -0.40, 0.0), quaternions[1]),
-                Pose(Point(0.0, -0.40, 0.0), quaternions[1])]
-                #Pose(Point(5.0, 0.0, 0.0), quaternions[2]),
-                #Pose(Point(5.0, 0.0, 0.0), quaternions[2]),
-                #Pose(Point(5.0, 0.0, 0.0), quaternions[2]),
-                
-                
-                
-                
-                
-                
-        
-        
-        # Append each of the four waypoints to the list.  Each waypoint
-        # Append each of the four waypoints to the list.  Each waypoint
-        # Append each of the four waypoints to the list.  Each waypoint
-        # is a pose consisting of a position and orientation in the map frame.
         # Initialize the visualization markers for RViz
         self.init_markers()
         
@@ -110,12 +69,12 @@ class MoveBaseSquare():
         while i < len(waypoints) and not rospy.is_shutdown():
             # Update the marker display
             self.marker_pub.publish(self.markers)
-            rospy.loginfo("making the {0}th rotation".format(i))
+            rospy.loginfo("going to the {0}th goal".format(i))
             # Intialize the waypoint goal
             goal = MoveBaseGoal()
             
             # Use the map frame to define goal poses
-            goal.target_pose.header.frame_id = 'odom'
+            goal.target_pose.header.frame_id = self.frame_id_goal
             
             # Set the time stamp to "now"
             goal.target_pose.header.stamp = rospy.Time.now()
@@ -133,7 +92,7 @@ class MoveBaseSquare():
             self.move_base.send_goal(goal)
             
             # Allow 1 minute to get there
-            finished_within_time = self.move_base.wait_for_result(rospy.Duration(60)) 
+            finished_within_time = self.move_base.wait_for_result(rospy.Duration(self.action_allow_time)) 
             
             # If we don't get there in time, abort the goal
             if not finished_within_time:
@@ -170,7 +129,7 @@ class MoveBaseSquare():
         self.markers.color.b = marker_color['b']
         self.markers.color.a = marker_color['a']
         
-        self.markers.header.frame_id = 'map'
+        self.markers.header.frame_id = self.frame_id_goal
         self.markers.header.stamp = rospy.Time.now()
         self.markers.points = list()
 
@@ -187,5 +146,5 @@ if __name__ == '__main__':
     try:
         MoveBaseSquare()
     except rospy.ROSInterruptException:
-        rospy.loginfo("Navigation test finished.")
+        rospy.loginfo("Navigation Sweeping Done")
 

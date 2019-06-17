@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>main</name>
+  <name>sweeperMotion</name>
   <version>0.0.0</version>
-  <description>The main package</description>
+  <description>This Package sets goals for move_basic to navigate the feild in a zig-zag sweeping motion</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
