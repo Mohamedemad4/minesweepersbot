@@ -1,0 +1,8 @@
+prefix=/home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/devel/.private/catkin_tools_prebuild
+
+Name: catkin_tools_prebuild
+Description: Description of catkin_tools_prebuild
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/devel/.private/catkin_tools_prebuild/lib 
+Requires: 

@@ -1,0 +1,6 @@
+devel_space: /home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/devel
+install: false
+install_space: /home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/install
+profile: default
+source_space: /home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/src
+workspace: /home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python

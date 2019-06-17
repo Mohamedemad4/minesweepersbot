@@ -1,0 +1,1 @@
+/home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/devel/.private/catkin_tools_prebuild/setup.bash

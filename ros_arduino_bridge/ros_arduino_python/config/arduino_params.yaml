@@ -11,7 +11,7 @@ rate: 50
 sensorstate_rate: 10
 
 # Are we using the base controller code
-use_base_controller: False
+use_base_controller: True
 
 # Rate to publish odom info
 base_controller_rate: 10
