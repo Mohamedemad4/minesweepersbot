@@ -13,6 +13,8 @@ for angle in range(0,len(euler_angles)):
     q = Quaternion(*q_angle)
     quaternions.append(q)
 """
+#def genNuggetGoals(arena_length,scannerat,qs):
+#    [i for i in Pose(Point(arena_length,scannerat,0.0),qs[3]),t]
 def GenDirty(scan_length,arena_length,qs):
     r=[] #x,y,w,status
     rospy.loginfo("Generating Waypoints...")
@@ -24,7 +26,7 @@ def GenDirty(scan_length,arena_length,qs):
     scannerat=0.0
     for i in range(0,int(arena_length/scan_length)*-1):
         if i==0:
-            r.append([Pose(Point(arena_length,scannerat,0.0),qs[3]),t])
+            r.append([Pose(Point(arena_length,scannerat,0.0),qs[3]),t])#genNuggetGoals())
 
         if r[-1][-1]==t and r[-1][0].position.x==0.0:
             r.append([Pose(Point(0.0,scannerat,0.0),qs[2]),fr]) #fr
