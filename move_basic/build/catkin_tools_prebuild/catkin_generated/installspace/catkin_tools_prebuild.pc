@@ -1,8 +1,0 @@
-prefix=/home/daruis1/repos/minesweepersbot/move_basic/install
-
-Name: catkin_tools_prebuild
-Description: Description of catkin_tools_prebuild
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/daruis1/repos/minesweepersbot/move_basic/install/lib 
-Requires: 
