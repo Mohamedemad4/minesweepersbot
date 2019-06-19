@@ -1,1 +1,0 @@
-/home/daruis1/repos/minesweepersbot/ros_arduino_bridge/ros_arduino_python/devel/.private/catkin_tools_prebuild/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
