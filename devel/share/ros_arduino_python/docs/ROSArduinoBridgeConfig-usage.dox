@@ -1,0 +1,13 @@
+\subsubsection usage Usage
+\verbatim
+<node name="ros_arduino_bridge" pkg="ros_arduino_python" type="ros_arduino_bridge">
+  <param name="Kp" type="double" value="10.0" />
+  <param name="Kd" type="double" value="12.0" />
+  <param name="Ki" type="double" value="0.0" />
+  <param name="Ko" type="double" value="50.0" />
+  <param name="accel_limit" type="double" value="1.0" />
+  <param name="odom_linear_scale_correction" type="double" value="1.0" />
+  <param name="odom_angular_scale_correction" type="double" value="1.0" />
+</node>
+\endverbatim
+

@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/daruis1/repos/minesweepersbot/devel/include",
+        "/opt/ros/melodic/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

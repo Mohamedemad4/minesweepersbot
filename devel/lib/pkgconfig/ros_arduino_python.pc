@@ -1,0 +1,8 @@
+prefix=/home/daruis1/repos/minesweepersbot/devel
+
+Name: ros_arduino_python
+Description: Description of ros_arduino_python
+Version: 0.2.0
+Cflags: -I/home/daruis1/repos/minesweepersbot/devel/include
+Libs: -L/home/daruis1/repos/minesweepersbot/devel/lib 
+Requires: dynamic_reconfigure
