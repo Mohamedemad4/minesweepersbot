@@ -45,15 +45,17 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-//#define USE_BASE      // Enable/disable the base controller code
+
+
+#define USE_BASE      // Enable/disable the base controller code
 
 //#define USE_IMU       // Enable/disable use of an IMU
 
 /* Define the motor controller and encoder library you are using */
 #ifdef USE_BASE
   /* The Pololu VNH5019 dual motor driver shield */
-  #define POLOLU_VNH5019
-
+  //#define POLOLU_VNH5019
+  #define L298Steppers
   /* The Pololu MC33926 dual motor driver shield */
   //#define POLOLU_MC33926
 
@@ -73,7 +75,7 @@
   // #define NO_MOTOR_CONTROLLER
   
   /* The RoboGaia encoder shield */
-  #define ROBOGAIA
+  //#define ROBOGAIA
   
   /* The RoboGaia 3-axis encoder shield */
   //#define ROBOGAIA_3_AXIS
@@ -84,7 +86,7 @@
 
 //#define USE_SERVOS  // Enable/disable use of old PWM servo support as defined in servos.h
 
-#define USE_SERVOS2  // Enable/disable use of new PWM servo support as defined in servos2.h
+//#define USE_SERVOS2  // Enable/disable use of new PWM servo support as defined in servos2.h
 
 /* Include old servo support if required */
 #ifdef USE_SERVOS
@@ -106,7 +108,7 @@
 
 /* Include definition of serial commands */
 #include "commands.h"
-
+#include "runSteppers.h"
 /* Sensor functions */
 #include "sensors.h"
 
@@ -299,7 +301,7 @@ int runCommand() {
     break;
 
 #endif
-    
+
 #ifdef USE_BASE
   case READ_ENCODERS:
     Serial.print(readEncoder(LEFT));
@@ -376,6 +378,9 @@ void setup() {
    interval and check for auto-stop conditions.
 */
 void loop() {
+  #ifdef L298Steppers
+    runSteppers();
+  #endif
   while (Serial.available() > 0) {
     
     // Read the next character

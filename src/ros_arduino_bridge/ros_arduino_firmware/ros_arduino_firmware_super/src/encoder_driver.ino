@@ -9,7 +9,26 @@
    
 #ifdef USE_BASE
 
-#ifdef ROBOGAIA
+#ifdef L298Steppers
+
+void initEncoders(){
+  lencoder=0;
+  rencoder=0;
+}
+long readEncoder(int i){
+  if (i==LEFT) return lencoder;
+  else return rencoder;
+}
+void resetEncoder(int i){
+  if (i==LEFT) lencoder=0;
+  else rencoder=0;
+}
+void resetEncoders(){
+    resetEncoder(LEFT);
+    resetEncoder(RIGHT);
+}
+
+#elif ROBOGAIA
   /* The Robogaia Mega Encoder shield */
   #include "MegaEncoderCounter.h"
 
