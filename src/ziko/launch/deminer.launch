@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+   <!--node pkg="move_basic"
+	 type="move_basic"
+	 name="move_basic">
+	 <param name="max_linear_velocity" value="0.25"/>
+	 <param name="max_angular_velocity" value="0.15"/>
+   </node-->
+<rosparam command="load" file="$(find ziko)/param/ekf_params_d.yaml" />
+<rosparam command="load" file="$(find ziko)/param/navsat_trans_d.yaml" />
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom"/>
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node>
+
+
+</launch>
+

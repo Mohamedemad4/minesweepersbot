@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+<remap from="/gps/fix" to="/fix"/>
+
+</launch>
+
