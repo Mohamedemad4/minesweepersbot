@@ -9,7 +9,44 @@
 
 #ifdef USE_BASE
 
-#ifdef L298Steppers
+#ifdef Servo360s
+   #include "Servo.h"
+   Servo rightServo;
+   Servo leftServo;
+   int mapSpeedsRight(int spd){
+     if (spd>0){
+       return map(spd,0,255,SERVO_SPEED_FOR_RIGHT,SERVO_STOP_VAL);
+     }
+     else{
+       return map(abs(spd),0,255,SERVO_SPEED_BACK_RIGHT,SERVO_STOP_VAL);
+     }
+   }
+   int mapSpeedsLeft(int spd){
+     if (spd>0){
+       return map(spd,0,255,SERVO_SPEED_FOR_LEFT,SERVO_STOP_VAL);
+     }
+     else{
+       return map(abs(spd),0,255,SERVO_SPEED_BACK_LEFT,SERVO_STOP_VAL);
+     }
+   }
+   void initMotorController(){
+       pinMode(motorPinR, OUTPUT);
+       pinMode(motorPinL, OUTPUT);
+   }
+   void setMotorSpeed(int i, int spd){
+      if (i==LEFT){ 
+        leftServo.write(mapSpeedsLeft(spd));
+      }
+      else{
+        rightServo.write(mapSpeedsRight(spd));
+       }
+   }
+
+   void setMotorSpeeds(int leftSpeed, int rightSpeed){
+     setMotorSpeed(LEFT,leftSpeed);
+     setMotorSpeed(RIGHT,rightSpeed);
+   }    
+#elif defined L298Steppers
    void initMotorController(){
        pinMode(motorPin1L, OUTPUT);
        pinMode(motorPin2L, OUTPUT);
@@ -29,8 +66,7 @@
      setMotorSpeed(LEFT,leftSpeed);
      setMotorSpeed(RIGHT,rightSpeed);
    }
-#endif
-#ifdef POLOLU_VNH5019
+#elif defined POLOLU_VNH5019
   /* Include the Pololu library */
   #include "DualVNH5019MotorShield.h"
 

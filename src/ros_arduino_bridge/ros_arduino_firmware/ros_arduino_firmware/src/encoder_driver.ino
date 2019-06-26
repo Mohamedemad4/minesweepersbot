@@ -6,11 +6,39 @@
    #define near the top of the main ROSArduinoBridge.ino file.
    
    ************************************************************ */
-   
+#define USE_BASE
+#define Servo360s
 #ifdef USE_BASE
-
-#ifdef L298Steppers
-
+#ifdef Servo360s
+int lencoder=0;
+int rencoder=0;
+void initEncoders(){
+  lencoder=0;
+  rencoder=0;
+}
+long readEncoder(int i){
+  if (i==LEFT){
+    if (lencoder>200){
+      lencoder=0;
+    }
+    return lencoder+1;
+  }
+  else{
+    if (rencoder>200){
+      rencoder=0;
+    }
+    return rencoder+1;
+    }
+}
+void resetEncoder(int i){
+  if (i==LEFT) lencoder=0;
+  else rencoder=0;
+}
+void resetEncoders(){
+    resetEncoder(LEFT);
+    resetEncoder(RIGHT);
+}
+#elif defined(L298Steppers)
 void initEncoders(){
   lencoder=0;
   rencoder=0;
@@ -28,7 +56,7 @@ void resetEncoders(){
     resetEncoder(RIGHT);
 }
 
-#elif ROBOGAIA
+#elif defined(ROBOGAIA)
   /* The Robogaia Mega Encoder shield */
   #include "MegaEncoderCounter.h"
 

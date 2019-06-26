@@ -35,6 +35,21 @@ void setMotorSpeeds(int leftSpeed, int rightSpeed);
  #define motorPin4R 9
  
 #endif
+#ifdef Servo360s
+  #define motorPinR 10
+  #define motorPinL 11
+  
+  #define SERVO_SPEED_FOR 180
+  #define SERVO_SPEED_BACK 0
+  
+  #define SERVO_SPEED_BACK_RIGHT 0//90//180
+  #define SERVO_SPEED_FOR_RIGHT 180//90//0
+  
+  #define SERVO_SPEED_BACK_LEFT 180//90//0
+  #define SERVO_SPEED_FOR_LEFT 0//90//180
+  
+  #define SERVO_STOP_VAL 90
+#endif
 #ifdef ADAFRUIT_MOTOR_SHIELD_V2
 
   #define LEFT_MOTOR_HEADER   1
