@@ -86,24 +86,23 @@ class MoveBaseSquare():
             self.move(goal)
             
             i += 1
-        
     def move(self, goal):
-            # Send the goal pose to the MoveBaseAction server
-            self.move_base.send_goal(goal)
-            
-            # Allow 1 minute to get there
-            finished_within_time = self.move_base.wait_for_result(rospy.Duration(self.action_allow_time)) 
-            
-            # If we don't get there in time, abort the goal
-            if not finished_within_time:
+         # Send the goal pose to the MoveBaseAction server
+        self.move_base.send_goal(goal)
+         
+         # Allow 1 minute to get there
+        finished_within_time = self.move_base.get_result() 
+        rate=rospy.Rate(1)
+        i=0
+        while True:
+            i+=1
+            rate.sleep()
+            if self.move_base.get_state()==GoalStatus.SUCCEEDED:
+                rospy.loginfo("Goal Reached!")
+                break
+            if i==self.action_allow_time:
                 self.move_base.cancel_goal()
-                rospy.loginfo("Timed out achieving goal")
-            else:
-                # We made it!
-                state = self.move_base.get_state()
-                if state == GoalStatus.SUCCEEDED:
-                    rospy.loginfo("Goal succeeded!")
-                    
+                rospy.logerr("Goal Failed")
     def init_markers(self):
         # Set up our waypoint markers
         marker_scale = 0.2
