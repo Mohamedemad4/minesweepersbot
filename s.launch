@@ -1,0 +1,8 @@
+<launch>
+<include file="$(find turtlebot3_gazebo)/launch/turtlebot3_empty_world.launch"/>
+<node name="mmb" pkg="move_basic" type="move_basic">
+<param name="base_frame" value="base_footprint"/>
+</node>
+
+<!--node name="waypoints" pkg="sweeperMotion" type="m.py"/-->
+</launch>
