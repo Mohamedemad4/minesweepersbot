@@ -2,13 +2,15 @@
 <launch>
 	<node pkg="move_basic"
 	 type="move_basic"
-	 name="move_basic">
+	 name="move_basic"
+   output="screen">
 	 <param name="max_linear_velocity" value="0.25"/>
 	 <param name="max_angular_velocity" value="0.15"/>
-
-	<remap from="/cmd_vel" to="/super/cmd_vel"/>   
+   <param name="alternate_planning_frame" value="super/odometry"/>
+   <param name="base_frame" value="super/base_link"/>
  </node>
-<rosparam command="load" file="$(find ziko)/param/ekf_params_s.yaml" />
+ 
+<!--rosparam command="load" file="$(find ziko)/param/ekf_params_s.yaml" />
 <rosparam command="load" file="$(find ziko)/param/navsat_trans_s.yaml" />
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom"/>
 
@@ -18,7 +20,7 @@
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
     <remap from="odometry/filtered" to="odometry/filtered_map"/>
-  </node>
+  </node-->
 
 
 </launch>

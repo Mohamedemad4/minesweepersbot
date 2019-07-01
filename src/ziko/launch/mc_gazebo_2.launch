@@ -1,33 +1,26 @@
 <?xml version="1.0"?>
 <launch>
-
-  <!--arg name="model" default="super"/>
-  <arg name="x_pos" default="0.0"/>
-  <arg name="y_pos" default="0.0"/>
-  <arg name="z_pos" default="0.0"/-->
-  <arg name="verbose" default="true"/>
-
-  <remap from="/gps/fix" to="/fix"/>
-  
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
 	  <arg name="world_name" value="$(find ziko)/worlds/empty.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
+    <arg name="gui" value="false"/>
+    <arg name="verbose" default="true"/>
+    <arg name="headless" value="true"/>
     <arg name="debug" value="false"/>
   </include>
 <group ns="deminer">
   <include file="$(find ziko)/launch/mc.launch"/>
   <include file="$(find ziko)/launch/deminer.launch"/>
   <node name="deminer_spawn" pkg="gazebo_ros" type="spawn_model"
-	    args="-z 1.0 -unpause -sdf -model deminer -file $(find ziko)/model/deminer.sdf  " respawn="false" output="screen" />
+	    args=" -unpause -sdf -model deminer -file $(find ziko)/model/deminer.sdf  " respawn="false" output="screen" >
+  </node>
 </group>
 <group ns="super">
-  <include file="$(find ziko)/launch/mc.launch"/>
+	<include file="$(find ziko)/launch/mc.launch"/>
   <include file="$(find ziko)/launch/super.launch"/>
   <node name="super_spawn" pkg="gazebo_ros" type="spawn_model"
-	    args="-z 1.0 -unpause -sdf -model super -file $(find ziko)/model/super.sdf  " respawn="false" output="screen" />
+	    args="-y -.5 -unpause -sdf -model super -file $(find ziko)/model/super.sdf  " respawn="false" output="screen" />
 </group>
 </launch>
 
