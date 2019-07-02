@@ -4,14 +4,15 @@
 	  <arg name="world_name" value="$(find ziko)/worlds/empty.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="false"/>
+    <arg name="gui" value="true"/>
     <arg name="verbose" default="true"/>
-    <arg name="headless" value="true"/>
+    <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
   </include>
 <group ns="deminer">
   <include file="$(find ziko)/launch/mc.launch"/>
   <include file="$(find ziko)/launch/deminer.launch"/>
+  <param name="tf_prefix" value="deminer" />
   <node name="deminer_spawn" pkg="gazebo_ros" type="spawn_model"
 	    args=" -unpause -sdf -model deminer -file $(find ziko)/model/deminer.sdf  " respawn="false" output="screen" >
   </node>
@@ -19,6 +20,7 @@
 <group ns="super">
 	<include file="$(find ziko)/launch/mc.launch"/>
   <include file="$(find ziko)/launch/super.launch"/>
+  <param name="tf_prefix" value="super" />
   <node name="super_spawn" pkg="gazebo_ros" type="spawn_model"
 	    args="-y -.5 -unpause -sdf -model super -file $(find ziko)/model/super.sdf  " respawn="false" output="screen" />
 </group>

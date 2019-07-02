@@ -6,21 +6,22 @@
    output="screen">
 	 <param name="max_linear_velocity" value="0.25"/>
 	 <param name="max_angular_velocity" value="0.15"/>
-   <param name="alternate_planning_frame" value="super/odometry"/>
+   <param name="alternate_planning_frame" value="super/odom"/>
+   <param name="preferred_planning_frame" value="super/map"/>
    <param name="base_frame" value="super/base_link"/>
  </node>
  
-<!--rosparam command="load" file="$(find ziko)/param/ekf_params_s.yaml" />
+<rosparam command="load" file="$(find ziko)/param/ekf_params_s.yaml" />
 <rosparam command="load" file="$(find ziko)/param/navsat_trans_s.yaml" />
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom"/>
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" output="screen"/>
 
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map">
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" output="screen">
     <remap from="odometry/filtered" to="odometry/filtered_map"/>
   </node>
 
-  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" output="screen">
     <remap from="odometry/filtered" to="odometry/filtered_map"/>
-  </node-->
+  </node>
 
 
 </launch>
