@@ -12,7 +12,7 @@
  </node>
  
 <rosparam command="load" file="$(find ziko)/param/ekf_params_s.yaml" />
-<rosparam command="load" file="$(find ziko)/param/navsat_trans_s.yaml" />
+
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" output="screen"/>
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" output="screen">
