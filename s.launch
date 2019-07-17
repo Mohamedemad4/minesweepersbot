@@ -1,6 +1,6 @@
 <launch>
 <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_empty_world.launch"/>
-<node name="mmb" pkg="move_basic" type="move_basic">
+<node name="mmb" pkg="move_basic" type="move_basic" output="screen">
 <param name="base_frame" value="base_footprint"/>
 </node>
 

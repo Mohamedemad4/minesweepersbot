@@ -10,7 +10,7 @@ from geometry_msgs.msg import Pose, Point, Quaternion, Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from tf.transformations import quaternion_from_euler
 from visualization_msgs.msg import Marker
-from math import radians, pi
+from math import radians, pi,sqrt
 
 class MoveBaseSquare():
     def __init__(self):
@@ -20,21 +20,12 @@ class MoveBaseSquare():
         
         # How big is the square we want the robot to navigate?
         arena_length = rospy.get_param("~arena_length",5.0) # meters
-        detector_width = rospy.get_param("~detector_width",-0.4) 
+        detector_width = rospy.get_param("~detector_width",0.4) 
         self.frame_id_goal = rospy.get_param("~frame_id_goal","odom")
         self.action_allow_time = rospy.get_param("~allowed_timeForgoal",60)
         # Create a list to hold the target quaternions (orientations)
-        quaternions = list()
-        
-        # First define the corner orientations as Euler angles.
-        euler_angles = (pi/2, pi, 3*pi/2, 0)# 90 counterclock wise,180 counterclockwise ,+90 clockwise,180 clockwise
-        
-        # Then convert the angles to quaternions
-        ##remember quaternions are obselete [Citation Needed]
-        for angle in range(0,len(euler_angles)):
-            q_angle = quaternion_from_euler(0, 0, euler_angles[angle], axes='sxyz')
-            q = Quaternion(*q_angle)
-            quaternions.append(q)
+        #quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=sqrt(0.5),z=sqrt(0.5)),"-90":Quaternion(w=sqrt(0.5),z=-sqrt(0.5))} #90 degress to the right
+        quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=1),"-90":Quaternion(w=1)} #90 degress to the right
         
         # Create a list to hold the waypoint poses
         waypoints = genrateWayPoints(detector_width,arena_length,quaternions)
@@ -91,7 +82,7 @@ class MoveBaseSquare():
         self.move_base.send_goal(goal)
          
          # Allow 1 minute to get there
-        finished_within_time = self.move_base.get_result() 
+        #finished_within_time = self.move_base.get_result() 
         rate=rospy.Rate(1)
         i=0
         while True:
