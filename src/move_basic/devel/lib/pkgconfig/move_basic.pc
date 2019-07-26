@@ -1,0 +1,8 @@
+prefix=/home/daruis1/repos/minesweepersbot/move_basic/devel
+
+Name: move_basic
+Description: Description of move_basic
+Version: 0.3.2
+Cflags: -I/home/daruis1/repos/minesweepersbot/move_basic/devel/include
+Libs: -L/home/daruis1/repos/minesweepersbot/move_basic/devel/lib 
+Requires: 

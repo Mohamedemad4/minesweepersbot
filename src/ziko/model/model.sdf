@@ -1,0 +1,167 @@
+<?xml version='1.0'?>
+    <sdf version='1.4'>
+      <model name="ziko">
+  <plugin name='differential_drive_controller'
+  filename='libgazebo_ros_diff_drive.so'>
+  <alwaysOn>true</alwaysOn>
+  <updateRate>50</updateRate>
+  <leftJoint>left_wheel_hinge</leftJoint>
+  <rightJoint>right_wheel_hinge</rightJoint>
+  <wheelSeparation>0.5</wheelSeparation>
+  <wheelDiameter>0.1</wheelDiameter>
+  <torque>1</torque>
+  <commandTopic>cmd_vel</commandTopic>
+   <odometryTopic>odometry</odometryTopic>
+   <odometryFrame>odometry</odometryFrame>
+  <robotBaseFrame>base_link</robotBaseFrame>
+  </plugin>
+  <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so"></plugin>
+  <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so"></plugin>
+        <static>false</static>
+
+        <link name='base_link'>
+          <pose>0 0 .1 0 0 0</pose>
+          <collision name='collision'>
+            <geometry>
+              <box>
+                <size>.5 .5 .01</size>
+              </box>
+            </geometry>
+          </collision>
+
+          <visual name='visual'>
+            <geometry>
+              <box>
+                <size>.5 .5 .01</size>
+              </box>
+            </geometry>
+          </visual>
+
+      </link>
+      <link name="left_wheel">
+        <pose>0.1 .25 0.1 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <link name="left_wheel_front">
+        <pose>-.25 .25 0.1 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+</link>
+
+
+      <link name="right_wheel_front">
+        <pose>-.25 -.25 0.1 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+      <link name="right_wheel">
+        <pose>0.1 -.25 0.1 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="revolute" name="left_wheel_hinge">
+        <pose>0 0 -0.03 0 0 0</pose>
+        <child>left_wheel</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+      <joint type="revolute" name="left_wheel_front_hinge">
+        <pose>0 0 -0.03 0 0 0</pose>
+        <child>left_wheel_front</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+      <joint type="revolute" name="right_wheel_hinge">
+        <pose>0 0 0.03 0 0 0</pose>
+        <child>right_wheel</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+      <joint type="revolute" name="right_wheel_front_hinge">
+        <pose>0 0 0.03 0 0 0</pose>
+        <child>right_wheel_front</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+          <!--include>
+      <uri>model://hokuyo</uri>
+      <pose>0.2 0 0.1 0 0 0</pose>
+    </include>
+    <joint name="hokuyo_joint" type="fixed">
+      <child>hokuyo::link</child>
+      <parent>base_link</parent>
+    </joint-->
+    <sonar><parent>base_link</parent> </sonar>
+      </model>
+    </sdf>
+

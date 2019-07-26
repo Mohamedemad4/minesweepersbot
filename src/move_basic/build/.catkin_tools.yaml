@@ -1,0 +1,6 @@
+devel_space: /home/daruis1/repos/minesweepersbot/move_basic/devel
+install: false
+install_space: /home/daruis1/repos/minesweepersbot/move_basic/install
+profile: default
+source_space: /home/daruis1/repos/minesweepersbot/move_basic/src
+workspace: /home/daruis1/repos/minesweepersbot/move_basic
