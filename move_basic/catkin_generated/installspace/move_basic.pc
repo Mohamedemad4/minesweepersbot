@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: move_basic
-Description: Description of move_basic
-Version: 0.3.2
-Cflags: -I/usr/local/include
-Libs: -L/usr/local/lib 
-Requires: 
