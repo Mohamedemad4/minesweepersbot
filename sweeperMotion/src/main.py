@@ -17,15 +17,18 @@ class MoveBaseSquare():
         rospy.init_node('Nav_Sweeper', anonymous=False)
         
         rospy.on_shutdown(self.shutdown)
-        
         # How big is the square we want the robot to navigate?
         arena_length = rospy.get_param("~arena_length",5.0) # meters
         detector_width = rospy.get_param("~detector_width",0.4) 
         self.frame_id_goal = rospy.get_param("~frame_id_goal","odom")
-        self.action_allow_time = rospy.get_param("~allowed_timeForgoal",60)
+        self.action_allow_time = rospy.get_param("~allowed_timeForgoal",300)
         # Create a list to hold the target quaternions (orientations)
-        #quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=sqrt(0.5),z=sqrt(0.5)),"-90":Quaternion(w=sqrt(0.5),z=-sqrt(0.5))} #90 degress to the right
-        quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=1),"-90":Quaternion(w=1)} #90 degress to the right
+        quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=sqrt(0.5),z=sqrt(0.5)),
+        "-90":Quaternion(w=sqrt(0.5),z=-sqrt(0.5)),
+        "180":Quaternion(w=1,z=1),
+        "-180":Quaternion(w=1,z=1)
+        } #90 degress to the right
+        #quaternions = {"id":Quaternion(w=1),"90":Quaternion(w=1),"-90":Quaternion(w=1)} #90 degress to the right
         
         # Create a list to hold the waypoint poses
         waypoints = genrateWayPoints(detector_width,arena_length,quaternions)
@@ -80,10 +83,7 @@ class MoveBaseSquare():
     def move(self, goal):
          # Send the goal pose to the MoveBaseAction server
         self.move_base.send_goal(goal)
-         
-         # Allow 1 minute to get there
-        #finished_within_time = self.move_base.get_result() 
-        rate=rospy.Rate(1)
+        rate=rospy.Rate(20)
         i=0
         while True:
             i+=1
@@ -91,7 +91,7 @@ class MoveBaseSquare():
             if self.move_base.get_state()==GoalStatus.SUCCEEDED:
                 rospy.loginfo("Goal Reached!")
                 break
-            if i==self.action_allow_time:
+            if i/20==self.action_allow_time:
                 self.move_base.cancel_goal()
                 rospy.logerr("Goal Failed")
     def init_markers(self):
@@ -131,7 +131,6 @@ class MoveBaseSquare():
         # Stop the robot
         self.cmd_vel_pub.publish(Twist())
         rospy.sleep(1)
-
 if __name__ == '__main__':
     try:
         MoveBaseSquare()

@@ -18,27 +18,19 @@ def GenDirty(scan_length,arena_length,qs):
             r.append([Pose(Point(arena_length,scannerat,0.0),qs["id"]),t])
 
         if r[-1][-1]==t and r[-1][0].position.x==0.0:
-            r.append([Pose(Point(0.0,scannerat,0.0),qs["-90"]),fr]) #fr
-            r.append([Pose(Point(0.0,scan_length*times_scanned,0.0),qs["id"]),sr]) #sr
-            r.append([Pose(Point(0.0,scan_length*times_scanned,0.0),qs["-90"]),rf]) #rf
-            r.append([Pose(Point(arena_length,scan_length*times_scanned,0.0),qs["-90"]),t]) #t
+            r.append([Pose(Point(0.0,scan_length*times_scanned,0.0),qs["90"]),rf]) #rf
+            r.append([Pose(Point(arena_length,scan_length*times_scanned,0.0),qs["id"]),t]) #t
             times_scanned+=1
             scannerat=times_scanned*scan_length
 
         if r[-1][-1]==t and r[-1][0].position.x==arena_length:
-            r.append([Pose(Point(arena_length,scannerat,0.0),qs["90"]),fr]) #fr
-            r.append([Pose(Point(arena_length,scan_length*times_scanned,0.0),qs["id"]),sr]) #sr
-            r.append([Pose(Point(arena_length,scan_length*times_scanned,0.0),qs["90"]),rf]) #rf
-            r.append([Pose(Point(0.0,scan_length*times_scanned,0.0),qs["90"]),t]) #t
-            times_scanned+=1
+            r.append([Pose(Point(arena_length,scan_length*times_scanned,0.0),qs["-180"]),rf]) #rf
+            r.append([Pose(Point(0.0,scan_length*times_scanned,0.0),qs["-180"]),t]) #t
+            times_scanned+=1  
             scannerat=times_scanned*scan_length
-  #      import pdb;pdb.set_trace();
   
     return r
 
 def genrateWayPoints(scan_length,arena_length,qs):
     a=GenDirty(scan_length,arena_length,qs)
     return np.array(a)[:,0]
-   # from pprint import pprint 
-    #print(len(a))
-    #pprint(a)
