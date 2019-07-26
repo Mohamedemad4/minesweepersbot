@@ -99,6 +99,7 @@ class MoveBasic {
     double obstacleWaitLimit;
 
     std::string preferredPlanningFrame;
+    std::string pub_vel;
     std::string alternatePlanningFrame;
     std::string preferredDrivingFrame;
     std::string alternateDrivingFrame;
@@ -264,9 +265,11 @@ MoveBasic::MoveBasic(): tfBuffer(ros::Duration(30.0)),
                           preferredDrivingFrame, "map");
     nh.param<std::string>("alternate_planning_frame",
                           alternateDrivingFrame, "odom");
+    nh.param<std::string>("pub_vel",
+                          pub_vel, "cmd_vel");
     nh.param<std::string>("base_frame", baseFrame, "base_link");
 
-    cmdPub = ros::Publisher(nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1));
+    cmdPub = ros::Publisher(nh.advertise<geometry_msgs::Twist>(pub_vel, 1));
     pathPub = ros::Publisher(nh.advertise<nav_msgs::Path>("/plan", 1));
 
     obstacle_dist_pub =
