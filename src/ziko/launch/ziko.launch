@@ -7,7 +7,16 @@
 	 name="move_basic">
 	 <param name="max_linear_velocity" value="0.25"/>
 	 <param name="max_angular_velocity" value="0.15"/>
+   <param name="pub_vel" value="/nav_vel"/>
+   <param name="localization_latency" value="0.5"/>
+   <param name="linear_acceleration" value="0.15"/>
+   <param name="angular_acceleration" value="0.3"/> <!--rad/s2-->
    </node>
+
+  <node pkg="twist_mux" type="twist_mux" name="twist_mux" output="screen">
+    <remap from="cmd_vel_out" to="/cmd_vel"/>
+    <rosparam file="$(find ziko)/param/twistmux.yaml" command="load"/>
+  </node>
 
 <rosparam command="load" file="$(find ziko)/param/ekf_params.yaml" />
 
@@ -19,6 +28,7 @@
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true">
     <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    <remap from="imu/data" to="imu"/>
   </node>
 
 
