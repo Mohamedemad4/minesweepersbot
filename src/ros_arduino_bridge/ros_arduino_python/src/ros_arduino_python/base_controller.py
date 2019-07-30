@@ -75,7 +75,7 @@ class BaseController:
         self.setup_pid(pid_params)
 
         # How many encoder ticks are there per meter?
-        self.ticks_per_meter =425#self.encoder_resolution * self.gear_reduction  / (self.wheel_diameter * pi)#425,200 
+        self.ticks_per_meter =self.encoder_resolution * self.gear_reduction  / (self.wheel_diameter * pi)#425,200 
         rospy.loginfo(self.ticks_per_meter)
 
         # What is the maximum acceleration we will tolerate when changing wheel speeds?
@@ -139,14 +139,6 @@ class BaseController:
             rospy.loginfo("PID parameters update to: Kp=%d, Kd=%d, Ki=%d, Ko=%d" %(self.Kp, self.Kd, self.Ki, self.Ko))
         else:
             rospy.logerr("Updating PID parameters failed!")
-    def scale(self,i):
-        #if i<5 and i!=0:
-        #    return 5  
-        #if i==0:
-        #    return i
-        #if i>5:
-        #    return 7
-        return i
     def poll(self):
         now = rospy.Time.now()
         if now > self.t_next:
@@ -272,9 +264,7 @@ class BaseController:
             if now > (self.last_cmd_vel + rospy.Duration(self.timeout)):
                 self.v_des_left = 0
                 self.v_des_right = 0
-                #self.v_left = 0
-                #self.v_right = 0
-
+ 
             if self.v_left < self.v_des_left:
                 self.v_left += self.max_accel
                 if self.v_left > self.v_des_left:
@@ -295,10 +285,7 @@ class BaseController:
             
             # Set motor speeds in encoder ticks per PID loop
             if not self.stopped:
-                rospy.loginfo("left: {0}".format(self.v_left))
-                rospy.loginfo("des_left: {0}".format(self.v_des_left))
-
-                self.arduino.drive(self.scale(self.v_left), self.scale(self.v_right))
+                self.arduino.drive(self.v_left, self.v_right)
                 
             self.t_next = now + self.t_delta
 
