@@ -8,8 +8,26 @@
    ************************************************************ */
    
 #ifdef USE_BASE
+#ifdef optical
+#include "Encoder.h"
+Encoder le(3, 6);
+Encoder re(2, 4);  
 
-#ifdef L298Steppers
+void initEncoders(){}
+long readEncoder(int i){
+  if (i==LEFT) return le.read();
+  else return re.read();
+}
+void resetEncoder(int i){
+  if (i==LEFT) le.readAndReset();
+  else re.readAndReset();
+}
+void resetEncoders(){
+    resetEncoder(LEFT);
+    resetEncoder(RIGHT);
+}
+
+#elif defined L298Steppers
 
 void initEncoders(){
   lencoder=0;

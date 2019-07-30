@@ -11,6 +11,10 @@ void setMotorSpeeds(int leftSpeed, int rightSpeed);
  * Pin assignments for the Arduino Motor Shield R3
  */
 
+#ifdef motorDriver
+  #define motorLeftPin 10
+  #define motorRightPin 11
+#endif
 #ifdef ARDUINO_MOTOR_SHIELD_R3
 
   #define LEFT_MOTOR_PIN_DIR    12
@@ -23,7 +27,7 @@ void setMotorSpeeds(int leftSpeed, int rightSpeed);
 
 #endif
 
-#ifdef L298Steppers
+
  #define motorPin1L 2  
  #define motorPin2L 3
  #define motorPin3L 4
@@ -34,7 +38,6 @@ void setMotorSpeeds(int leftSpeed, int rightSpeed);
  #define motorPin3R 8
  #define motorPin4R 9
  
-#endif
 #ifdef ADAFRUIT_MOTOR_SHIELD_V2
 
   #define LEFT_MOTOR_HEADER   1

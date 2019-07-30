@@ -8,7 +8,26 @@
    *************************************************************/
 
 #ifdef USE_BASE
+#ifdef motorDriver
+#include "CytronMotorDriver.h"
+CytronMD r(PWM_DIR, 10, 11);  // PWM 1 = Pin 3, DIR 1 = Pin 4.
+CytronMD l(PWM_DIR, 9, 5); 
+    void initMotorController(){
 
+   }
+   void setMotorSpeed(int i, int spd){
+     if(i==LEFT){
+     l.setSpeed(spd);
+     }
+     if (i==RIGHT){
+     r.setSpeed(spd);
+     }
+   }
+   void setMotorSpeeds(int leftSpeed, int rightSpeed){
+     setMotorSpeed(LEFT,leftSpeed);
+     setMotorSpeed(RIGHT,rightSpeed);
+   }
+#endif
 #ifdef L298Steppers
    void initMotorController(){
        pinMode(motorPin1L, OUTPUT);

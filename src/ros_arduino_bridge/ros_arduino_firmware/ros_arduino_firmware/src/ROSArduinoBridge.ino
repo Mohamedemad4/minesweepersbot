@@ -55,7 +55,8 @@
 #ifdef USE_BASE
   /* The Pololu VNH5019 dual motor driver shield */
   //#define POLOLU_VNH5019
-  #define L298Steppers
+  //#define L298Steppers
+  #define motorDriver
   /* The Pololu MC33926 dual motor driver shield */
   //#define POLOLU_MC33926
 
@@ -70,7 +71,7 @@
   *  it with the 3-axis encoder shield.
   */
   //#define USE_ARDUINO_MOTOR_SHIELD_R3_BRAKE
-  
+  #define optical
   /* For testing only */
   // #define NO_MOTOR_CONTROLLER
   
@@ -378,9 +379,6 @@ void setup() {
    interval and check for auto-stop conditions.
 */
 void loop() {
-  #ifdef L298Steppers
-    runSteppers();
-  #endif
   while (Serial.available() > 0) {
     
     // Read the next character
