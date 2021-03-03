@@ -1,1 +1,1 @@
-# minesweepersbot
+# minesweepers bot
